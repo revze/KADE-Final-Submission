@@ -9,6 +9,7 @@ import io.revze.footballapp.R
 import io.revze.footballapp.model.Player
 import io.revze.footballapp.model.Team
 import io.revze.footballapp.ui.team.detail.TeamDetailActivity
+import io.revze.footballapp.ui.team.detail.player.detail.PlayerDetailActivity
 import io.revze.footballapp.utils.GlideApp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_row_player.*
@@ -33,12 +34,13 @@ class PlayerAdapter(private val context: Context, private val players: List<Play
             tv_name.text = player.name
             tv_position.text = player.position
             itemView.onClick {
-//                context.startActivity<TeamDetailActivity>(TeamDetailActivity.TEAM_ID to team.id,
-//                        TeamDetailActivity.TEAM_NAME to team.name,
-//                        TeamDetailActivity.STADIUM to team.stadium,
-//                        TeamDetailActivity.FORMED_YEAR to team.formedYear,
-//                        TeamDetailActivity.LOGO to team.logo,
-//                        TeamDetailActivity.DESCRIPTION to team.description)
+                context.startActivity<PlayerDetailActivity>(
+                        PlayerDetailActivity.NAME to player.name,
+                        PlayerDetailActivity.PHOTO to player.fanArt,
+                        PlayerDetailActivity.WEIGHT to player.weight,
+                        PlayerDetailActivity.HEIGHT to player.height,
+                        PlayerDetailActivity.POSITION to player.position,
+                        PlayerDetailActivity.DESCRIPTION to player.description)
             }
         }
     }

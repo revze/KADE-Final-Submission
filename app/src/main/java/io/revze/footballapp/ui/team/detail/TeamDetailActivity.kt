@@ -6,12 +6,19 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
+import io.objectbox.Box
+import io.objectbox.kotlin.query
+import io.objectbox.query.Query
 import io.revze.footballapp.R
 import io.revze.footballapp.adapter.CustomFragmentPagerAdapter
+import io.revze.footballapp.db.ObjectBox
+import io.revze.footballapp.model.FavoriteTeam
+import io.revze.footballapp.model.FavoriteTeam_
 import io.revze.footballapp.ui.team.detail.description.TeamDescriptionFragment
-import io.revze.footballapp.ui.team.detail.player.TeamPlayerFragment
+import io.revze.footballapp.ui.team.detail.player.list.TeamPlayerFragment
 import io.revze.footballapp.utils.GlideApp
 import kotlinx.android.synthetic.main.activity_team_detail.*
+import okhttp3.internal.Util.equal
 
 class TeamDetailActivity : AppCompatActivity() {
 
@@ -26,13 +33,20 @@ class TeamDetailActivity : AppCompatActivity() {
     private lateinit var addToFavoriteMenu: MenuItem
     private lateinit var context: Context
     private var teamId = ""
+    private var logo = ""
+    private var teamName = ""
+    private var formedYear = ""
+    private var stadium = ""
     private var description = ""
+    private lateinit var favoriteTeamBox: Box<FavoriteTeam>
+    private lateinit var favoriteTeamQuery: Query<FavoriteTeam>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_detail)
 
         context = this
+        favoriteTeamBox = ObjectBox.boxStore.boxFor(FavoriteTeam::class.java)
         val toolbar = toolbar
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
@@ -41,11 +55,19 @@ class TeamDetailActivity : AppCompatActivity() {
 
         if (intent != null) {
             teamId = intent.getStringExtra(TEAM_ID)
-            GlideApp.with(this).load(intent.getStringExtra(LOGO)).into(iv_logo)
-            tv_team_name.text = intent.getStringExtra(TEAM_NAME)
-            tv_formed_year.text = intent.getStringExtra(FORMED_YEAR)
-            tv_stadium.text = intent.getStringExtra(STADIUM)
-            description = intent.getStringExtra(DESCRIPTION)
+            logo = intent.getStringExtra(LOGO)
+            teamName = intent.getStringExtra(TEAM_NAME)
+            formedYear = intent.getStringExtra(FORMED_YEAR)
+            stadium = intent.getStringExtra(STADIUM)
+            description = intent.getStringExtra(DESCRIPTION) ?: ""
+
+            favoriteTeamQuery = favoriteTeamBox.query {
+                equal(FavoriteTeam_.id, teamId)
+            }
+            GlideApp.with(this).load(logo).into(iv_logo)
+            tv_team_name.text = teamName
+            tv_formed_year.text = formedYear
+            tv_stadium.text = stadium
         }
 
 
@@ -67,7 +89,18 @@ class TeamDetailActivity : AppCompatActivity() {
                 true
             }
             R.id.menu_add_to_favorite -> {
-                addToFavoriteMenu.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_to_favorites)
+                if (favoriteTeamQuery.findFirst() != null) {
+                    favoriteTeamQuery.remove()
+                    addToFavoriteMenu.icon = ContextCompat.getDrawable(context, R.drawable.ic_add_to_favorites)
+                } else {
+                    favoriteTeamBox.put(FavoriteTeam(id = teamId,
+                            name = teamName,
+                            description = description,
+                            formedYear = formedYear,
+                            stadium = stadium,
+                            logo = logo))
+                    addToFavoriteMenu.icon = ContextCompat.getDrawable(context, R.drawable.ic_added_to_favorites)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -77,6 +110,12 @@ class TeamDetailActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_favorite, menu)
         addToFavoriteMenu = menu.getItem(0)
+        setFavorite()
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setFavorite() {
+        if (favoriteTeamQuery.findFirst() != null) addToFavoriteMenu.icon = ContextCompat.getDrawable(context, R.drawable.ic_added_to_favorites)
+        else addToFavoriteMenu.icon = ContextCompat.getDrawable(context, R.drawable.ic_add_to_favorites)
     }
 }

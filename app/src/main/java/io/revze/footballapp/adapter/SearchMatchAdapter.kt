@@ -30,14 +30,15 @@ class SearchMatchAdapter(private val context: Context, private val searchMathces
 
     inner class SearchMatchViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bindItem(searchMatch: SearchMatch) {
-            tv_date.text = Helper().dateConverter(searchMatch.dateEvent)
-            tv_time.text = Helper().timeConverter(searchMatch.timeEvent)
+            val helper = Helper("${searchMatch.dateEvent} ${searchMatch.timeEvent}")
+
+            tv_date.text = helper.convertDate()
+            tv_time.text = helper.convertTime()
             tv_home_team.text = searchMatch.homeTeam
             tv_home_score.text = if (searchMatch.homeScore != null) searchMatch.homeScore else ""
             tv_away_team.text = searchMatch.awayTeam
             tv_away_score.text = if (searchMatch.awayScore != null) searchMatch.awayScore else ""
-            if (searchMatch.homeScore != null && searchMatch.awayScore != null) iv_add_to_calendar.visible()
-            else iv_add_to_calendar.gone()
+            iv_add_to_calendar.gone()
             itemView.onClick {
                 context.startActivity<MatchDetailActivity>(MatchDetailActivity.MATCH_ID to searchMatch.eventId)
             }

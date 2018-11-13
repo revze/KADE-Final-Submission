@@ -1,0 +1,97 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:210251279028421126",
+      "lastPropertyId": "8:4683613346084578596",
+      "name": "FavoriteMatch",
+      "properties": [
+        {
+          "id": "1:8935055118785625725",
+          "name": "id"
+        },
+        {
+          "id": "2:3173769334660014728",
+          "name": "eventId"
+        },
+        {
+          "id": "3:8805405666872273145",
+          "name": "homeTeam"
+        },
+        {
+          "id": "4:7630447409690218292",
+          "name": "awayTeam"
+        },
+        {
+          "id": "5:1042534349689263830",
+          "name": "homeScore"
+        },
+        {
+          "id": "6:5543804840787458010",
+          "name": "awayScore"
+        },
+        {
+          "id": "7:2490284554303982770",
+          "name": "dateEvent"
+        },
+        {
+          "id": "8:4683613346084578596",
+          "name": "timeEvent"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:5887042986890334788",
+      "lastPropertyId": "9:7616216997443597092",
+      "name": "FavoriteTeam",
+      "properties": [
+        {
+          "id": "2:3501706200086189792",
+          "name": "id"
+        },
+        {
+          "id": "3:7306755230113480311",
+          "name": "name"
+        },
+        {
+          "id": "4:2131821186052007604",
+          "name": "logo"
+        },
+        {
+          "id": "5:2121653795191000116",
+          "name": "formedYear"
+        },
+        {
+          "id": "6:1419358981589312535",
+          "name": "stadium"
+        },
+        {
+          "id": "7:7677358685167639003",
+          "name": "description"
+        },
+        {
+          "id": "9:7616216997443597092",
+          "name": "objectBoxId"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:5887042986890334788",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    3220337685091691706,
+    6933142158453669715
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

@@ -1,4 +1,4 @@
-package io.revze.footballapp.ui.team.detail.player
+package io.revze.footballapp.ui.team.detail.player.list
 
 
 import android.os.Bundle

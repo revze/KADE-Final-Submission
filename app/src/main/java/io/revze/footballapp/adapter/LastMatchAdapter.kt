@@ -29,8 +29,10 @@ class LastMatchAdapter(private val context: Context, private val lastMatches: Li
 
     inner class LastMatchViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bindItem(lastMatch: LastMatch) {
-            tv_date.text = Helper().dateConverter(lastMatch.dateEvent)
-            tv_time.text = Helper().timeConverter(lastMatch.timeEvent)
+            val helper = Helper("${lastMatch.dateEvent} ${lastMatch.timeEvent}")
+
+            tv_date.text = helper.convertDate()
+            tv_time.text = helper.convertTime()
             tv_home_team.text = lastMatch.homeTeam
             tv_away_team.text = lastMatch.awayTeam
             tv_home_score.text = lastMatch.homeScore

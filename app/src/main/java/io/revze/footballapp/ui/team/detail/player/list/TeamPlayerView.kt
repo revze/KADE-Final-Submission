@@ -1,4 +1,4 @@
-package io.revze.footballapp.ui.team.detail.player
+package io.revze.footballapp.ui.team.detail.player.list
 
 import io.revze.footballapp.model.League
 import io.revze.footballapp.model.NextMatch

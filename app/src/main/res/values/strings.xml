@@ -34,6 +34,10 @@
     <string name="last_match_title">Last</string>
     <string name="team_overview_title">Overview</string>
     <string name="team_player_title">Players</string>
+    <string name="favorite_match_title">Matches</string>
+    <string name="favorite_team_title">Teams</string>
+    <string name="empty_favorite_match">Favorite match is empty...</string>
+    <string name="empty_favorite_team">Favorite team is empty...</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_match_hint">Search Match...</string>
@@ -41,4 +45,6 @@
     <string name="clear_menu_item_title">Clear</string>
     <string name="search_menu_item_title">Search</string>
     <string name="refresh_action">Refresh</string>
+    <string name="weight">Weight (Kg)</string>
+    <string name="height">Height (m)</string>
 </resources>

@@ -59,7 +59,7 @@ class SearchMatchActivity : AppCompatActivity(), SearchMatchView {
         rvMatch.layoutManager = LinearLayoutManager(this)
         rvMatch.adapter = searchMatchAdapter
 
-        etSearch.onEditorAction { v, actionId, event ->
+        etSearch.onEditorAction { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val search = etSearch.text.toString().trim()
                 if (!search.equals("")) presenter.searchMatch(ctx, etSearch.text.toString().trim())

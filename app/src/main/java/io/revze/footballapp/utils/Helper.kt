@@ -6,35 +6,43 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
 
-class Helper {
-    fun timeConverter(time: String): String {
-        return "12"
+class Helper(private val time: String) {
+
+    fun getCalendar(): Calendar {
+        val year = time.substring(0, 4).toInt()
+        val month = if (time.substring(5, 6).equals("0"))
+            time[6].toString().toInt() - 1
+        else time.substring(5, 7).toInt() - 1
+        val day = if (time.substring(8, 9).equals("0"))
+            time[9].toString().toInt()
+        else time.substring(8, 10).toInt()
+        val hour = if (time.substring(11, 12).equals("0"))
+            time[12].toString().toInt()
+        else time.substring(11, 13).toInt()
+        val minute = if (time.substring(14, 15).equals("0"))
+            time[15].toString().toInt()
+        else time.substring(14, 16).toInt()
+
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day, hour, minute)
+        calendar.add(Calendar.HOUR_OF_DAY, 7)
+
+        return calendar
     }
 
-    fun dateConverter(date: String): String {
-//        val year = date.substring(0, 4).toInt()
-//        val month = if (date.substring(5, 0).equals("0")) {date.substring(6, 0).toInt() - 1} else {date.substring(5, 1).toInt() - 1}
-//        val day = if (date.substring(9, 9).equals("0")) {date.substring(8, 8).toInt()} else {date.substring(8, 9).toInt()}
-//        val gregorianCalendar = GregorianCalendar(year, month, day)
-//
-//        gregorianCalendar.add(Calendar.HOUR_OF_DAY, 24)
-//
-//        return gregorianCalendar.time.toString()
+    fun getTime(): Date = getCalendar().time
 
-//        2018-11-24
-//        0123456789
+    fun getTimeInMillis(): Long = getCalendar().timeInMillis
 
-//        try {
-//            val sourceDF = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-//            val parseSrcDate = sourceDF.parse(date)
-//            val finalDF = SimpleDateFormat("EEE, dd MMM yyyy", Locale.US)
-//
-//            return finalDF.format(parseSrcDate)
-//        }
-//        catch (e: ParseException) {
-//            return date
-//        }
+    fun convertDate(): String {
+        val dateFormat = SimpleDateFormat("EEE, dd MMM yyyy", Locale.US)
 
-        return "12"
+        return dateFormat.format(getTime())
+    }
+
+    fun convertTime(): String {
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.US)
+
+        return dateFormat.format(getTime())
     }
 }

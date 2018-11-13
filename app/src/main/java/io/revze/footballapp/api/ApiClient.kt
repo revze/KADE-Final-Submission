@@ -147,7 +147,7 @@ class ApiClient {
     }
 
     interface GetTeamsCallback {
-        fun onSuccess(team: List<Team>?)
+        fun onSuccess(teams: List<Team>?)
 
         fun onFailed(message: String)
     }

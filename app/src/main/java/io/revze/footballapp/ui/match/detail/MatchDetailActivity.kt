@@ -9,8 +9,16 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import io.objectbox.Box
+import io.objectbox.BoxStore
+import io.objectbox.kotlin.query
+import io.objectbox.query.Query
+import io.revze.footballapp.App
 import io.revze.footballapp.utils.Helper
 import io.revze.footballapp.R
+import io.revze.footballapp.db.ObjectBox
+import io.revze.footballapp.model.FavoriteMatch
+import io.revze.footballapp.model.FavoriteMatch_
 import io.revze.footballapp.model.MatchDetail
 import io.revze.footballapp.utils.GlideApp
 import io.revze.footballapp.utils.gone
@@ -23,7 +31,6 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
 
     companion object {
         const val MATCH_ID = "match_id"
-        const val HOMO_ID = "match_id"
     }
 
     private lateinit var presenter: MatchDetailPresenter
@@ -34,6 +41,9 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
     private lateinit var tvError: TextView
     private lateinit var ctx: Context
     private lateinit var addToFavoriteMenu: MenuItem
+    private lateinit var favoriteMatchBox: Box<FavoriteMatch>
+    private lateinit var favoriteMatchQuery: Query<FavoriteMatch>
+    private lateinit var matchDetail: MatchDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +51,15 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
 
         presenter = MatchDetailPresenter(this)
         ctx = this
+        favoriteMatchBox = ObjectBox.boxStore.boxFor(FavoriteMatch::class.java)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (intent != null) id = intent.getStringExtra(MATCH_ID)
+        if (intent != null) {
+            id = intent.getStringExtra(MATCH_ID)
+            favoriteMatchQuery = favoriteMatchBox.query {
+                equal(FavoriteMatch_.eventId, id)
+            }
+        }
 
         svMatchDetail = sv_match_detail
         layoutLoader = layout_loader
@@ -60,7 +76,19 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
                 true
             }
             R.id.menu_add_to_favorite -> {
-                addToFavoriteMenu.icon = ContextCompat.getDrawable(ctx, R.drawable.ic_added_to_favorites)
+                if (favoriteMatchQuery.findFirst() != null) {
+                    favoriteMatchQuery.remove()
+                    addToFavoriteMenu.icon = ContextCompat.getDrawable(ctx, R.drawable.ic_add_to_favorites)
+                } else {
+                    favoriteMatchBox.put(FavoriteMatch(eventId = id,
+                            homeTeam = matchDetail.homeTeam,
+                            awayTeam = matchDetail.awayTeam,
+                            dateEvent = matchDetail.dateEvent,
+                            timeEvent = matchDetail.timeEvent,
+                            homeScore = matchDetail.homeScore,
+                            awayScore = matchDetail.awayScore))
+                    addToFavoriteMenu.icon = ContextCompat.getDrawable(ctx, R.drawable.ic_added_to_favorites)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -78,14 +106,18 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
     }
 
     override fun onSuccessGetMatchDetail(matchDetail: MatchDetail?) {
+        addToFavoriteMenu.isVisible = true
         svMatchDetail.visible()
         layoutError.gone()
 
         if (matchDetail != null) {
+            this.matchDetail = matchDetail
+            val helper = Helper("${matchDetail.dateEvent} ${matchDetail.timeEvent}")
+
             presenter.getTeamDetail(ctx, matchDetail.homeTeamId, "home")
             presenter.getTeamDetail(ctx, matchDetail.awayTeamId, "away")
-            tv_date.text = Helper().dateConverter(matchDetail.dateEvent)
-            tv_time.text = Helper().timeConverter(matchDetail.timeEvent)
+            tv_date.text = helper.convertDate()
+            tv_time.text = helper.convertTime()
             tv_home_team.text = matchDetail.homeTeam
             tv_away_team.text = matchDetail.awayTeam
             tv_home_score.text = matchDetail.homeScore
@@ -134,6 +166,13 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_favorite, menu)
         addToFavoriteMenu = menu.getItem(0)
+        addToFavoriteMenu.isVisible = false
+        setFavorite()
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setFavorite() {
+        if (favoriteMatchQuery.findFirst() != null) addToFavoriteMenu.icon = ContextCompat.getDrawable(ctx, R.drawable.ic_added_to_favorites)
+        else addToFavoriteMenu.icon = ContextCompat.getDrawable(ctx, R.drawable.ic_add_to_favorites)
     }
 }

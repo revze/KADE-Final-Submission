@@ -59,7 +59,7 @@ class SearchTeamActivity : AppCompatActivity(), SearchTeamView {
         rvTeam.layoutManager = LinearLayoutManager(this)
         rvTeam.adapter = teamAdapter
 
-        etSearch.onEditorAction { v, actionId, event ->
+        etSearch.onEditorAction { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val search = etSearch.text.toString().trim()
                 if (!search.equals("")) presenter.searchTeam(ctx, etSearch.text.toString().trim())
