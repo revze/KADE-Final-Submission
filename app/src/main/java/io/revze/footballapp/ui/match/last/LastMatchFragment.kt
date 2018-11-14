@@ -52,7 +52,7 @@ class LastMatchFragment : Fragment(), LastMatchView {
         super.onViewCreated(view, savedInstanceState)
 
         presenter = LastMatchPresenter(this)
-        val spinnerLeague = spinner_league
+        val spinnerLeague = spinner_league_last_match
         leagueAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, leagueNames)
         rvLastMatch = rv_last_match
         layoutLoader = layout_loader

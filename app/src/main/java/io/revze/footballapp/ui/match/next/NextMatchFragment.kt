@@ -53,7 +53,7 @@ class NextMatchFragment : Fragment(), NextMatchView {
         super.onViewCreated(view, savedInstanceState)
 
         presenter = NextMatchPresenter(this)
-        val spinnerLeague = spinner_league
+        val spinnerLeague = spinner_league_next_match
         rvNextMatch = rv_next_match
         layoutLoader = layout_loader
         layoutError = layout_error

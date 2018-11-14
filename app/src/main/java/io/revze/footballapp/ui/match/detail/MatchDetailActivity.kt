@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -26,6 +27,8 @@ import io.revze.footballapp.utils.visible
 import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_loader.*
+import org.jetbrains.anko.contentView
+import org.jetbrains.anko.design.snackbar
 
 class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
 
@@ -79,6 +82,7 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
                 if (favoriteMatchQuery.findFirst() != null) {
                     favoriteMatchQuery.remove()
                     addToFavoriteMenu.icon = ContextCompat.getDrawable(ctx, R.drawable.ic_add_to_favorites)
+                    contentView?.snackbar(getString(R.string.success_removed_favorite_match))
                 } else {
                     favoriteMatchBox.put(FavoriteMatch(eventId = id,
                             homeTeam = matchDetail.homeTeam,
@@ -88,6 +92,7 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
                             homeScore = matchDetail.homeScore,
                             awayScore = matchDetail.awayScore))
                     addToFavoriteMenu.icon = ContextCompat.getDrawable(ctx, R.drawable.ic_added_to_favorites)
+                    contentView?.snackbar(getString(R.string.success_added_favorite_match))
                 }
                 true
             }

@@ -8,7 +8,7 @@
     tools:context=".ui.match.last.LastMatchFragment">
 
     <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spinner_league"
+        android:id="@+id/spinner_league_last_match"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"/>

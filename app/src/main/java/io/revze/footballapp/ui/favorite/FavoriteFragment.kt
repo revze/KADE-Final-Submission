@@ -29,7 +29,7 @@ class FavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val tabLayout = favorite_tab
-        val viewPager = view_pager
+        val viewPager = view_pager_favorite
 
         val viewPagerAdapter = CustomFragmentPagerAdapter(childFragmentManager)
         viewPager.adapter = viewPagerAdapter

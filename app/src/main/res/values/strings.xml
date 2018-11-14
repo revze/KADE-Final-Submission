@@ -20,6 +20,8 @@
     <string name="substitutes">Substitutes</string>
     <string name="success_added_favorite_match">Added to favorite match</string>
     <string name="success_removed_favorite_match">Removed from favorite match</string>
+    <string name="success_added_favorite_team">Added to favorite team</string>
+    <string name="success_removed_favorite_team">Removed from favorite team</string>
     <string name="server_error">Sorry, Server error...</string>
     <string name="unknown_error">Sorry, Unknown error...</string>
     <string name="network_error">Sorry, Cant connect to network...</string>

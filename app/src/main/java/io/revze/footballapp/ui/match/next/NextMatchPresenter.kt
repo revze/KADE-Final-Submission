@@ -11,6 +11,12 @@ class NextMatchPresenter(private var nextMatchView: NextMatchView?) : Presenter<
         nextMatchView = null
     }
 
+    private lateinit var leagueCallback: ApiClient.GetLeagueCallback
+
+    fun setLeagueCallback(leagueCallback: ApiClient.GetLeagueCallback) {
+        this.leagueCallback = leagueCallback
+    }
+
     fun getLeague(context: Context) {
         ApiClient().getLeagues(context, object : ApiClient.GetLeagueCallback {
             override fun onSuccess(leagues: List<League>?) {

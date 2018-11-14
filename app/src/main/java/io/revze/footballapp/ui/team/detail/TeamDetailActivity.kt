@@ -19,6 +19,8 @@ import io.revze.footballapp.ui.team.detail.player.list.TeamPlayerFragment
 import io.revze.footballapp.utils.GlideApp
 import kotlinx.android.synthetic.main.activity_team_detail.*
 import okhttp3.internal.Util.equal
+import org.jetbrains.anko.contentView
+import org.jetbrains.anko.design.snackbar
 
 class TeamDetailActivity : AppCompatActivity() {
 
@@ -92,6 +94,7 @@ class TeamDetailActivity : AppCompatActivity() {
                 if (favoriteTeamQuery.findFirst() != null) {
                     favoriteTeamQuery.remove()
                     addToFavoriteMenu.icon = ContextCompat.getDrawable(context, R.drawable.ic_add_to_favorites)
+                    contentView?.snackbar(getString(R.string.success_removed_favorite_team))
                 } else {
                     favoriteTeamBox.put(FavoriteTeam(id = teamId,
                             name = teamName,
@@ -100,6 +103,7 @@ class TeamDetailActivity : AppCompatActivity() {
                             stadium = stadium,
                             logo = logo))
                     addToFavoriteMenu.icon = ContextCompat.getDrawable(context, R.drawable.ic_added_to_favorites)
+                    contentView?.snackbar(getString(R.string.success_added_favorite_team))
                 }
                 true
             }
