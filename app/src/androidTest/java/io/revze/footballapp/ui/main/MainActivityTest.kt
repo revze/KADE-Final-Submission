@@ -23,35 +23,6 @@ class MainActivityTest {
 
     @Test
     fun testFavoriteMatch() {
-//        Aplikasi terbuka dan menampilkan beberapa view.
-//        Memastikan bahwa terdapat sebuah bottom navigation yang ditampilkan.
-//        Memastikan bahwa terdapat sebuah spinner liga pada tab next match yang ditampilkan.
-//        Memberi jeda 3 detik untuk menunggu response next match.
-//        Memastikan bahwa terdapat sebuah recyclerview next match yang ditampilkan.
-//        Memberi tindakan scroll sampai item ke-5 pada recyclerview next match.
-//        Memberi tindakan klik item ke-5 pada recyclerview next match.
-//        Memberi jeda 3 detik untuk menunggu response match detail.
-//        Memastikan tombol Favorite telah ditampilkan.
-//        Memberi tindakan klik pada tombol Favorite.
-//        Memastikan teks “Added to favorite match” telah ditampilkan.
-//        Menekan tombol kembali.
-//        Memastikan bahwa terdapat sebuah tab Team bottom navigation yang ditampilkan.
-//        Memberi tindakan klik tab Team pada bottom navigation.
-//        Memastikan bahwa terdapat sebuah spinner liga pada tab favorite yang ditampilkan.
-//        Memberi jeda 3 detik untuk menunggu response team.
-//        Memastikan bahwa terdapat sebuah recyclerview tim yang ditampilkan.
-//        Memberi tindakan scroll sampai item ke-5 pada recyclerview team.
-//        Memberi tindakan klik item ke-5 pada recyclerview team.
-//        Memastikan tombol Favorite telah ditampilkan.
-//        Memberi tindakan klik pada tombol Favorite.
-//        Memastikan teks “Added to favorite team” telah ditampilkan.
-//        Menekan tombol kembali.
-//        Memastikan bahwa terdapat sebuah tab Favorite bottom navigation yang ditampilkan.
-//        Memberi tindakan klik tab Favorite pada bottom navigation.
-//        Memastikan bahwa terdapat sebuah tab layout pada tab Favorite.
-//        Memastikan bahwa terdapat sebuah tab Team pada tab layout.
-//        Memberi tindakan klik tab team pada tab Favorite.
-
         onView(withId(R.id.navigation_bottom)).check(matches(isDisplayed()))
         onView(withId(R.id.spinner_league_next_match)).check(matches(isDisplayed()))
         delay(3)
