@@ -25,7 +25,7 @@ class PlayerDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (intent != null) {
-            supportActionBar?.setTitle(intent.getStringExtra(NAME))
+            supportActionBar?.title = intent.getStringExtra(NAME)
             GlideApp.with(this).load(intent.getStringExtra(PHOTO)).into(iv_player)
             tv_weight.text = intent.getStringExtra(WEIGHT)
             tv_height.text = intent.getStringExtra(HEIGHT)

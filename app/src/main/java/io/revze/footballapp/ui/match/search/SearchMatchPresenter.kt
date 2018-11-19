@@ -1,13 +1,19 @@
 package io.revze.footballapp.ui.match.search
 
 import android.content.Context
-import io.revze.footballapp.api.ApiClient
-import io.revze.footballapp.model.League
-import io.revze.footballapp.model.NextMatch
-import io.revze.footballapp.model.SearchMatch
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.revze.footballapp.R
+import io.revze.footballapp.api.ApiServiceInterface
 import io.revze.footballapp.ui.base.Presenter
+import java.io.IOException
 
-class SearchMatchPresenter(private var searchMatchView: SearchMatchView?) : Presenter<SearchMatchView> {
+class SearchMatchPresenter(private var searchMatchView: SearchMatchView?,
+                           private var processScheduler: Scheduler = Schedulers.newThread(),
+                           private var androidScheduler: Scheduler = AndroidSchedulers.mainThread(),
+                           private val apiServiceInterface: ApiServiceInterface = ApiServiceInterface.create()) : Presenter<SearchMatchView> {
+
     override fun onDetach() {
         searchMatchView = null
     }
@@ -15,16 +21,18 @@ class SearchMatchPresenter(private var searchMatchView: SearchMatchView?) : Pres
     fun searchMatch(context: Context, query: String) {
         searchMatchView?.showLoader()
 
-        ApiClient().searchMatches(context, query, object : ApiClient.SearchMatchCallback {
-            override fun onSuccess(matches: List<SearchMatch>?) {
-                searchMatchView?.hideLoader()
-                searchMatchView?.onSuccessSearchMatch(matches)
-            }
-
-            override fun onFailed(message: String) {
-                searchMatchView?.hideLoader()
-                searchMatchView?.onFailedSearchMatch(message)
-            }
-        })
+        apiServiceInterface.searchMatch(query)
+                .subscribeOn(processScheduler)
+                .observeOn(androidScheduler)
+                .subscribe({
+                    searchMatchView?.hideLoader()
+                    searchMatchView?.onSuccessSearchMatch(it.match)
+                }, {
+                    searchMatchView?.hideLoader()
+                    when (it) {
+                        is IOException -> searchMatchView?.onFailedSearchMatch(context.getString(R.string.network_error))
+                        else -> searchMatchView?.onFailedSearchMatch(context.getString(R.string.server_error))
+                    }
+                })
     }
 }

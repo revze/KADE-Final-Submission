@@ -51,6 +51,9 @@ dependencies {
     implementation "com.android.support:support-v4:$android_support_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     implementation "io.objectbox:objectbox-kotlin:$objectbox_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "org.mockito:mockito-inline:$mockito_version"

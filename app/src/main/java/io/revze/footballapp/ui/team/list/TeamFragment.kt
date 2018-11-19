@@ -19,6 +19,8 @@ import io.revze.footballapp.utils.visible
 import kotlinx.android.synthetic.main.fragment_team.*
 import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_loader.*
+import org.jetbrains.anko.contentView
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.longToast
 import org.jetbrains.anko.support.v4.toast
@@ -97,7 +99,7 @@ class TeamFragment : Fragment(), TeamView {
     }
 
     override fun onFailedGetLeague(message: String) {
-        longToast(message)
+        requireActivity().contentView?.snackbar(message)
     }
 
 

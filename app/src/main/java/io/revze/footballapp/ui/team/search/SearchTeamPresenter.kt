@@ -1,14 +1,19 @@
 package io.revze.footballapp.ui.team.search
 
 import android.content.Context
-import io.revze.footballapp.api.ApiClient
-import io.revze.footballapp.model.League
-import io.revze.footballapp.model.NextMatch
-import io.revze.footballapp.model.SearchMatch
-import io.revze.footballapp.model.Team
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.revze.footballapp.R
+import io.revze.footballapp.api.ApiServiceInterface
 import io.revze.footballapp.ui.base.Presenter
+import java.io.IOException
 
-class SearchTeamPresenter(private var searchTeamView: SearchTeamView?) : Presenter<SearchTeamView> {
+class SearchTeamPresenter(private var searchTeamView: SearchTeamView?,
+                          private var processScheduler: Scheduler = Schedulers.newThread(),
+                          private var androidScheduler: Scheduler = AndroidSchedulers.mainThread(),
+                          private val apiServiceInterface: ApiServiceInterface = ApiServiceInterface.create()) : Presenter<SearchTeamView> {
+
     override fun onDetach() {
         searchTeamView = null
     }
@@ -16,16 +21,18 @@ class SearchTeamPresenter(private var searchTeamView: SearchTeamView?) : Present
     fun searchTeam(context: Context, name: String) {
         searchTeamView?.showLoader()
 
-        ApiClient().searchTeam(context, name, object : ApiClient.SearchTeamCallback {
-            override fun onSuccess(team: List<Team>?) {
-                searchTeamView?.hideLoader()
-                searchTeamView?.onSuccessSearchTeam(team)
-            }
-
-            override fun onFailed(message: String) {
-                searchTeamView?.hideLoader()
-                searchTeamView?.onFailedSearchTeam(message)
-            }
-        })
+        apiServiceInterface.searchTeam(name)
+                .subscribeOn(processScheduler)
+                .observeOn(androidScheduler)
+                .subscribe({
+                    searchTeamView?.hideLoader()
+                    searchTeamView?.onSuccessSearchTeam(it.teams)
+                }, {
+                    searchTeamView?.hideLoader()
+                    when (it) {
+                        is IOException -> searchTeamView?.onFailedSearchTeam(context.getString(R.string.network_error))
+                        else -> searchTeamView?.onFailedSearchTeam(context.getString(R.string.server_error))
+                    }
+                })
     }
 }

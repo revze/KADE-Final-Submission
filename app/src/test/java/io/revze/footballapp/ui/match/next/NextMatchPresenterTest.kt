@@ -1,17 +1,21 @@
 package io.revze.footballapp.ui.match.next
 
 import android.content.Context
-import com.google.gson.Gson
-import io.revze.footballapp.api.ApiClient
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.observers.TestObserver
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.TestScheduler
+import io.revze.footballapp.api.ApiServiceInterface
 import io.revze.footballapp.model.League
 import io.revze.footballapp.model.LeagueResponse
-import org.junit.Test
-
-import org.junit.Assert.*
+import io.revze.footballapp.model.NextMatch
+import io.revze.footballapp.model.NextMatchResponse
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
 class NextMatchPresenterTest {
@@ -20,36 +24,30 @@ class NextMatchPresenterTest {
     private lateinit var view: NextMatchView
 
     @Mock
-    private lateinit var leagueCallback: ApiClient.GetLeagueCallback
-
-    @Mock
-    private lateinit var apiClient: ApiClient
-
-    @Mock
     private lateinit var context: Context
+
+    @Mock
+    private lateinit var apiServiceInterface: ApiServiceInterface
 
     private lateinit var presenter: NextMatchPresenter
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        presenter = NextMatchPresenter(view)
+        presenter = NextMatchPresenter(view, Schedulers.trampoline(), Schedulers.trampoline())
     }
 
     @Test
-    fun getLeague() {
-        val leagues = mutableListOf<League>()
+    fun testGetNextMatch() {
+        val matchId = "123456"
+        val nextMatchResponse = NextMatchResponse(null)
 
-        presenter.setLeagueCallback(leagueCallback)
+        `when`(apiServiceInterface.getNextMatch(matchId)).thenReturn(Observable.just(nextMatchResponse))
 
-        `when`(apiClient.getLeagues(context, leagueCallback))
+        presenter.getNextMatch(context, matchId)
 
-        presenter.getLeague(context)
-
-        verify(view).onSuccessGetLeague(leagues)
-    }
-
-    @Test
-    fun getNextMatch() {
+        verify(view).showLoader()
+        verify(view).hideLoader()
+        verify(view).onSuccessGetNextMatch(nextMatchResponse.nextMatch)
     }
 }

@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 import io.revze.footballapp.R
 import io.revze.footballapp.adapter.NextMatchAdapter
@@ -133,5 +135,9 @@ class NextMatchFragment : Fragment(), NextMatchView {
         showLoader()
 
         presenter.getNextMatch(requireContext(), leagueId)
+    }
+
+    override fun testKepanggil() {
+
     }
 }

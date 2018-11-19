@@ -1,14 +1,19 @@
 package io.revze.footballapp.ui.match.detail
 
 import android.content.Context
-import io.revze.footballapp.api.ApiClient
-import io.revze.footballapp.model.LastMatch
-import io.revze.footballapp.model.League
-import io.revze.footballapp.model.MatchDetail
-import io.revze.footballapp.model.Team
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.revze.footballapp.R
+import io.revze.footballapp.api.ApiServiceInterface
 import io.revze.footballapp.ui.base.Presenter
+import java.io.IOException
 
-class MatchDetailPresenter(private var matchDetailView: MatchDetailView?) : Presenter<MatchDetailView> {
+class MatchDetailPresenter(private var matchDetailView: MatchDetailView?,
+                           private var processScheduler: Scheduler = Schedulers.newThread(),
+                           private var androidScheduler: Scheduler = AndroidSchedulers.mainThread(),
+                           private val apiServiceInterface: ApiServiceInterface = ApiServiceInterface.create()) : Presenter<MatchDetailView> {
+
     override fun onDetach() {
         matchDetailView = null
     }
@@ -16,29 +21,28 @@ class MatchDetailPresenter(private var matchDetailView: MatchDetailView?) : Pres
     fun getMatchDetail(context: Context, matchId: String) {
         matchDetailView?.showLoader()
 
-        ApiClient().getMatchDetail(context, matchId, object : ApiClient.GetMatchDetailCallback {
-            override fun onSuccess(matchDetail: MatchDetail?) {
-                matchDetailView?.hideLoader()
-                matchDetailView?.onSuccessGetMatchDetail(matchDetail)
-            }
-
-            override fun onFailed(message: String) {
-                matchDetailView?.hideLoader()
-                matchDetailView?.onFailedGetMatchDetail(message)
-            }
-        })
+        apiServiceInterface.getMatchDetail(matchId)
+                .subscribeOn(processScheduler)
+                .observeOn(androidScheduler)
+                .subscribe({
+                    matchDetailView?.hideLoader()
+                    matchDetailView?.onSuccessGetMatchDetail(it.matchDetail[0])
+                }, {
+                    matchDetailView?.hideLoader()
+                    when (it) {
+                        is IOException -> matchDetailView?.onFailedGetMatchDetail(context.getString(R.string.network_error))
+                        else -> matchDetailView?.onFailedGetMatchDetail(context.getString(R.string.server_error))
+                    }
+                })
     }
 
-    fun getTeamDetail(context: Context, teamId: String, type: String) {
-        ApiClient().getTeamDetail(context, teamId, object : ApiClient.GetTeamDetailCallback {
-            override fun onSuccess(team: Team?) {
-                if (type.equals("home")) matchDetailView?.showHomeTeamLogo(team?.logo)
-                else matchDetailView?.showAwayTeamLogo(team?.logo)
-            }
-
-            override fun onFailed(message: String) {
-
-            }
-        })
+    fun getTeamDetail(teamId: String, type: String) {
+        apiServiceInterface.getTeamDetail(teamId)
+                .subscribeOn(processScheduler)
+                .observeOn(androidScheduler)
+                .subscribe({
+                    if (type.equals("home")) matchDetailView?.showHomeTeamLogo(it.teams?.get(0)?.logo)
+                    else matchDetailView?.showAwayTeamLogo(it.teams?.get(0)?.logo)
+                })
     }
 }

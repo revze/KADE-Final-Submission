@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -29,6 +30,7 @@ import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_loader.*
 import org.jetbrains.anko.contentView
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
 
@@ -42,6 +44,7 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
     private lateinit var layoutLoader: LinearLayout
     private lateinit var layoutError: LinearLayout
     private lateinit var tvError: TextView
+    private lateinit var btnRefresh: Button
     private lateinit var ctx: Context
     private lateinit var addToFavoriteMenu: MenuItem
     private lateinit var favoriteMatchBox: Box<FavoriteMatch>
@@ -68,8 +71,10 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
         layoutLoader = layout_loader
         layoutError = layout_error
         tvError = tv_error
+        btnRefresh = btn_refresh
 
-        presenter.getMatchDetail(this, id)
+        btnRefresh.onClick { presenter.getMatchDetail(ctx, id) }
+        presenter.getMatchDetail(ctx, id)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -119,8 +124,8 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
             this.matchDetail = matchDetail
             val helper = Helper("${matchDetail.dateEvent} ${matchDetail.timeEvent}")
 
-            presenter.getTeamDetail(ctx, matchDetail.homeTeamId, "home")
-            presenter.getTeamDetail(ctx, matchDetail.awayTeamId, "away")
+            presenter.getTeamDetail(matchDetail.homeTeamId, "home")
+            presenter.getTeamDetail(matchDetail.awayTeamId, "away")
             tv_date.text = helper.convertDate()
             tv_time.text = helper.convertTime()
             tv_home_team.text = matchDetail.homeTeam

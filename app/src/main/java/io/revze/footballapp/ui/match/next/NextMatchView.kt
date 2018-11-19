@@ -13,6 +13,8 @@ interface NextMatchView : View {
 
     fun hideLoader()
 
+    fun testKepanggil()
+
     fun onSuccessGetNextMatch(nextMatches: List<NextMatch>?)
 
     fun onFailedGetNextMatch(message: String)
