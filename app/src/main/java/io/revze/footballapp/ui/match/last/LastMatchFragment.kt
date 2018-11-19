@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-
 import io.revze.footballapp.R
 import io.revze.footballapp.adapter.LastMatchAdapter
 import io.revze.footballapp.model.LastMatch
@@ -21,7 +20,6 @@ import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_loader.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.longToast
-import org.jetbrains.anko.support.v4.toast
 
 /**
  * A simple [Fragment] subclass.

@@ -24,7 +24,7 @@
     <string name="success_removed_favorite_team">Removed from favorite team</string>
     <string name="server_error">Sorry, Server error...</string>
     <string name="unknown_error">Sorry, Unknown error...</string>
-    <string name="network_error">Sorry, Cant connect to network...</string>
+    <string name="network_error">Sorry, Cannot connect to network...</string>
     <string name="empty_next_match">Next match is empty...</string>
     <string name="empty_player">Player is empty...</string>
     <string name="empty_last_match">Last match is empty...</string>

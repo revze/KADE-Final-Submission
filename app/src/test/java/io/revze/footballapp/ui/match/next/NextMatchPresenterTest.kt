@@ -2,20 +2,14 @@ package io.revze.footballapp.ui.match.next
 
 import android.content.Context
 import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.schedulers.TestScheduler
 import io.revze.footballapp.api.ApiServiceInterface
-import io.revze.footballapp.model.League
-import io.revze.footballapp.model.LeagueResponse
-import io.revze.footballapp.model.NextMatch
 import io.revze.footballapp.model.NextMatchResponse
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 class NextMatchPresenterTest {

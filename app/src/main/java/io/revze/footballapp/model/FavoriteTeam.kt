@@ -1,6 +1,5 @@
 package io.revze.footballapp.model
 
-import com.google.gson.annotations.SerializedName
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 

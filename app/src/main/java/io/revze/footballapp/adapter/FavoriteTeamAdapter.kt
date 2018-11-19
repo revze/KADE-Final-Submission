@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import io.revze.footballapp.R
 import io.revze.footballapp.model.FavoriteTeam
-import io.revze.footballapp.model.Team
 import io.revze.footballapp.ui.team.detail.TeamDetailActivity
 import io.revze.footballapp.utils.GlideApp
 import kotlinx.android.extensions.LayoutContainer

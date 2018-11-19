@@ -12,11 +12,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import io.objectbox.Box
-
 import io.revze.footballapp.R
-import io.revze.footballapp.R.id.btn_refresh
-import io.revze.footballapp.R.id.tv_error
-import io.revze.footballapp.R.layout.layout_error
 import io.revze.footballapp.adapter.FavoriteTeamAdapter
 import io.revze.footballapp.db.ObjectBox
 import io.revze.footballapp.model.FavoriteTeam

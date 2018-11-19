@@ -5,12 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.revze.footballapp.utils.Helper
 import io.revze.footballapp.R
-import io.revze.footballapp.ui.match.detail.MatchDetailActivity
 import io.revze.footballapp.model.SearchMatch
+import io.revze.footballapp.ui.match.detail.MatchDetailActivity
+import io.revze.footballapp.utils.Helper
 import io.revze.footballapp.utils.gone
-import io.revze.footballapp.utils.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_row_match.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -35,9 +34,9 @@ class SearchMatchAdapter(private val context: Context, private val searchMathces
             tv_date.text = helper.convertDate()
             tv_time.text = helper.convertTime()
             tv_home_team.text = searchMatch.homeTeam
-            tv_home_score.text = if (searchMatch.homeScore != null) searchMatch.homeScore else ""
+            tv_home_score.text = searchMatch.homeScore ?: ""
             tv_away_team.text = searchMatch.awayTeam
-            tv_away_score.text = if (searchMatch.awayScore != null) searchMatch.awayScore else ""
+            tv_away_score.text = searchMatch.awayScore ?: ""
             iv_add_to_calendar.gone()
             itemView.onClick {
                 context.startActivity<MatchDetailActivity>(MatchDetailActivity.MATCH_ID to searchMatch.eventId)

@@ -1,9 +1,9 @@
 package io.revze.footballapp.ui.team.detail
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import io.objectbox.Box
@@ -18,7 +18,6 @@ import io.revze.footballapp.ui.team.detail.description.TeamDescriptionFragment
 import io.revze.footballapp.ui.team.detail.player.list.TeamPlayerFragment
 import io.revze.footballapp.utils.GlideApp
 import kotlinx.android.synthetic.main.activity_team_detail.*
-import okhttp3.internal.Util.equal
 import org.jetbrains.anko.contentView
 import org.jetbrains.anko.design.snackbar
 

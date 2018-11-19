@@ -35,7 +35,7 @@
         <activity
             android:name=".ui.team.detail.TeamDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.team.detail.player.detail.PlayerDetailActivity"></activity>
+        <activity android:name=".ui.team.detail.player.detail.PlayerDetailActivity" />
     </application>
 
 </manifest>

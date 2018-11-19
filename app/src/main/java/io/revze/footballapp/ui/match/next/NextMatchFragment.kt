@@ -3,16 +3,12 @@ package io.revze.footballapp.ui.match.next
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-
 import io.revze.footballapp.R
 import io.revze.footballapp.adapter.NextMatchAdapter
 import io.revze.footballapp.model.League
@@ -24,7 +20,6 @@ import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_loader.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.longToast
-import org.jetbrains.anko.support.v4.onRefresh
 
 /**
  * A simple [Fragment] subclass.

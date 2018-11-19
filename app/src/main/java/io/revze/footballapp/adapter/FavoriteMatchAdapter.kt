@@ -5,13 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.revze.footballapp.utils.Helper
 import io.revze.footballapp.R
 import io.revze.footballapp.model.FavoriteMatch
 import io.revze.footballapp.ui.match.detail.MatchDetailActivity
-import io.revze.footballapp.model.NextMatch
+import io.revze.footballapp.utils.Helper
 import io.revze.footballapp.utils.gone
-import io.revze.footballapp.utils.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_row_match.*
 import org.jetbrains.anko.sdk27.coroutines.onClick

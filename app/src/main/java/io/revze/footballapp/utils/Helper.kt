@@ -1,31 +1,28 @@
 package io.revze.footballapp.utils
 
 import android.util.Log
-import android.widget.TextView
-import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 class Helper(private val time: String) {
 
-    private val TAG = this::javaClass.name
+    private val TAG = Helper::javaClass.name
 
-    fun getCalendar(): Calendar {
+    private fun getCalendar(): Calendar {
         val calendar = Calendar.getInstance()
 
         try {
             val year = time.substring(0, 4).toInt()
-            val month = if (time.substring(5, 6).equals("0"))
+            val month = if (time[5] == '0')
                 time[6].toString().toInt() - 1
             else time.substring(5, 7).toInt() - 1
-            val day = if (time.substring(8, 9).equals("0"))
+            val day = if (time[8] == '0')
                 time[9].toString().toInt()
             else time.substring(8, 10).toInt()
-            val hour = if (time.substring(11, 12).equals("0"))
+            val hour = if (time[11] == '0')
                 time[12].toString().toInt()
             else time.substring(11, 13).toInt()
-            val minute = if (time.substring(14, 15).equals("0"))
+            val minute = if (time[14] == '0')
                 time[15].toString().toInt()
             else time.substring(14, 16).toInt()
 
@@ -39,7 +36,7 @@ class Helper(private val time: String) {
         return calendar
     }
 
-    fun getTime(): Date = getCalendar().time
+    private fun getTime(): Date = getCalendar().time
 
     fun getTimeInMillis(): Long = getCalendar().timeInMillis
 

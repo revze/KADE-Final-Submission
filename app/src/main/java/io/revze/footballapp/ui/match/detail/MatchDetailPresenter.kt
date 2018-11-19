@@ -40,9 +40,9 @@ class MatchDetailPresenter(private var matchDetailView: MatchDetailView?,
         apiServiceInterface.getTeamDetail(teamId)
                 .subscribeOn(processScheduler)
                 .observeOn(androidScheduler)
-                .subscribe({
+                .subscribe {
                     if (type.equals("home")) matchDetailView?.showHomeTeamLogo(it.teams?.get(0)?.logo)
                     else matchDetailView?.showAwayTeamLogo(it.teams?.get(0)?.logo)
-                })
+                }
     }
 }

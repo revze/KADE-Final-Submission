@@ -12,8 +12,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import io.objectbox.Box
-import io.objectbox.query.Query
-
 import io.revze.footballapp.R
 import io.revze.footballapp.adapter.FavoriteMatchAdapter
 import io.revze.footballapp.db.ObjectBox
@@ -22,7 +20,6 @@ import io.revze.footballapp.utils.gone
 import io.revze.footballapp.utils.visible
 import kotlinx.android.synthetic.main.fragment_favorite_match.*
 import kotlinx.android.synthetic.main.layout_error.*
-import kotlinx.android.synthetic.main.layout_loader.*
 
 /**
  * A simple [Fragment] subclass.

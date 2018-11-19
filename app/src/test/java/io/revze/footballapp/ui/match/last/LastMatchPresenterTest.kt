@@ -5,10 +5,8 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.revze.footballapp.api.ApiServiceInterface
 import io.revze.footballapp.model.LastMatchResponse
-import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
@@ -34,7 +32,7 @@ class LastMatchPresenterTest {
     }
 
     @Test
-    fun getLastMatch() {
+    fun testGetLastMatch() {
         val matchId = "123456"
         val lastMatchResponse = LastMatchResponse(null)
 
